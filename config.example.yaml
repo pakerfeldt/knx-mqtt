@@ -1,0 +1,63 @@
+---
+# One of 'fatal', 'error', 'warn', 'info', 'debug', 'trace'
+loglevel: 'info'
+
+outgoingMqttMessage:
+
+  # The message type to publish over MQTT when receiving events from KNX
+  # One of:
+  #   value - a string representation of the value excluding the unit
+  #   value-with-unit - a string representation of the value including the unit (if any)
+  #   bytes - the raw bytes as received from KNX
+  #   json  - a json object containing the fields specified in includedJsonFields.
+  type: json
+
+  # Emit values using group address
+  emitUsingAddress: true
+  # Emit values using human readable group address names
+  emitUsingName: true
+
+  # When sending MQTT messages as JSON, these values determines what should be included.
+  includedJsonFields:
+    # Include the field `bytes`, with a base64 representation of the raw bytes
+    bytes: true
+    # Include the field `name`, containing the human readable name of the address
+    name: true
+    # Include the field `string`, containing a string representation of the value
+    value: true
+    # Include the field `unit`, containing the unit of the datatype (if any)
+    unit: true
+
+knx:
+  # ETS exported group addresses
+  etsExport: 'knx.xml'
+
+  # Address to the KNX gateway
+  endpoint: "224.0.23.12:3671"
+
+  # If true, connect over tunnel/unicast, if false use router/multicast.
+  tunnelMode: false
+
+  # Ignore unknown group addresses
+  ignoreUnknownGroupAddresses: false
+
+  # Enables logging from the KNX library
+  enableLogs: false
+
+mqtt:
+  # URL to MQTT broker
+  url: 'tcp://localhost:1883'
+  
+  # Set a custom ID to use for the MQTT client
+  # clientId: knx-mqtt
+  
+  #username: 'your username'
+  #password: 'your password'
+
+  # Prefix to MQTT topic
+  topicPrefix: 'knx/'
+  # Set the QoS for published messages
+  # 0 = at most once, 1 = at least once, 2 = exactly once
+  qos: 0
+  # Set retain flag on messages
+  retain: false
