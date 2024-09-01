@@ -75,9 +75,10 @@ E.g. `"25.35"`, `"true"`.
 
 ## Supported KNX DPTs
 See [supported-dpts](https://github.com/pakerfeldt/knx-mqtt/blob/main/supported-dpts).
+Let me know if you're missing a specific DPT.
 
 ## Migrating from knx-mqtt-bridge
-If you’re transitioning from [knx-mqtt-bridge](https://github.com/pakerfeldt/knx-mqtt-bridge), the NodeJS version of this bridge, you’ll find the migration relatively straightforward. The configurations are similar enough to make the transition smooth.
+If you’re transitioning from [knx-mqtt-bridge](https://github.com/pakerfeldt/knx-mqtt-bridge), the NodeJS version of this bridge, you’ll find the migration relatively straightforward. The configurations are similar enough to make the transition smooth. This library might initially support fewer DPTs and TLS is not yet supported for MQTT.
 
 ## Caveats
 This app does not yet support MQTT over TLS.
