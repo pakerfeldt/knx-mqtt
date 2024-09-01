@@ -74,14 +74,6 @@ func PackString(datatype string, value string) ([]byte, error) {
 		return packFunc(int16(int16Value)), nil
 	}
 
-	if packFunc, exists := timeOfDayPackFunctions[datatype]; exists {
-		return packFunc(value), nil
-	}
-
-	if packFunc, exists := datePackFunctions[datatype]; exists {
-		return packFunc(value), nil
-	}
-
 	if packFunc, exists := uint32PackFunctions[datatype]; exists {
 		uint32Value, err := strconv.ParseUint(value, 10, 32)
 		if err != nil {
@@ -99,18 +91,6 @@ func PackString(datatype string, value string) ([]byte, error) {
 	}
 
 	if packFunc, exists := stringPackFunctions[datatype]; exists {
-		return packFunc(value), nil
-	}
-
-	if packFunc, exists := rgbPackFunctions[datatype]; exists {
-		return packFunc(value), nil
-	}
-
-	if packFunc, exists := colorXyyPackFunctions[datatype]; exists {
-		return packFunc(value), nil
-	}
-
-	if packFunc, exists := rgbwPackFunctions[datatype]; exists {
 		return packFunc(value), nil
 	}
 
@@ -294,7 +274,24 @@ var int16PackFunctions = map[string]func(int16) []byte{
 	"8.011": func(value int16) []byte { return dpt.DPT_8011(value).Pack() },
 }
 
-var timeOfDayPackFunctions = map[string]func(string) []byte{
+var uint32PackFunctions = map[string]func(uint32) []byte{
+	"12.001": func(value uint32) []byte { return dpt.DPT_12001(value).Pack() },
+}
+
+var int32PackFunctions = map[string]func(int32) []byte{
+	"13.001": func(value int32) []byte { return dpt.DPT_13001(value).Pack() },
+	"13.002": func(value int32) []byte { return dpt.DPT_13002(value).Pack() },
+	"13.010": func(value int32) []byte { return dpt.DPT_13010(value).Pack() },
+	"13.011": func(value int32) []byte { return dpt.DPT_13011(value).Pack() },
+	"13.012": func(value int32) []byte { return dpt.DPT_13012(value).Pack() },
+	"13.013": func(value int32) []byte { return dpt.DPT_13013(value).Pack() },
+	"13.014": func(value int32) []byte { return dpt.DPT_13014(value).Pack() },
+	"13.015": func(value int32) []byte { return dpt.DPT_13015(value).Pack() },
+	"13.016": func(value int32) []byte { return dpt.DPT_13016(value).Pack() },
+	"13.100": func(value int32) []byte { return dpt.DPT_13100(value).Pack() },
+}
+
+var stringPackFunctions = map[string]func(string) []byte{
 	"10.001": func(value string) []byte {
 		matches := regexpTimeOfDay.FindStringSubmatch(value)
 		if matches == nil {
@@ -318,9 +315,6 @@ var timeOfDayPackFunctions = map[string]func(string) []byte{
 		}
 		return datapoint.Pack()
 	},
-}
-
-var datePackFunctions = map[string]func(string) []byte{
 	"11.001": func(value string) []byte {
 		matches := regexpDate.FindStringSubmatch(value)
 		if matches == nil {
@@ -339,33 +333,9 @@ var datePackFunctions = map[string]func(string) []byte{
 
 		return datapoint.Pack()
 	},
-}
-
-var uint32PackFunctions = map[string]func(uint32) []byte{
-	"12.001": func(value uint32) []byte { return dpt.DPT_12001(value).Pack() },
-}
-
-var int32PackFunctions = map[string]func(int32) []byte{
-	"13.001": func(value int32) []byte { return dpt.DPT_13001(value).Pack() },
-	"13.002": func(value int32) []byte { return dpt.DPT_13002(value).Pack() },
-	"13.010": func(value int32) []byte { return dpt.DPT_13010(value).Pack() },
-	"13.011": func(value int32) []byte { return dpt.DPT_13011(value).Pack() },
-	"13.012": func(value int32) []byte { return dpt.DPT_13012(value).Pack() },
-	"13.013": func(value int32) []byte { return dpt.DPT_13013(value).Pack() },
-	"13.014": func(value int32) []byte { return dpt.DPT_13014(value).Pack() },
-	"13.015": func(value int32) []byte { return dpt.DPT_13015(value).Pack() },
-	"13.016": func(value int32) []byte { return dpt.DPT_13016(value).Pack() },
-	"13.100": func(value int32) []byte { return dpt.DPT_13100(value).Pack() },
-}
-
-var stringPackFunctions = map[string]func(string) []byte{
 	"16.000": func(value string) []byte { return dpt.DPT_16000(value).Pack() },
 	"16.001": func(value string) []byte { return dpt.DPT_16001(value).Pack() },
-
 	"28.001": func(value string) []byte { return dpt.DPT_28001(value).Pack() },
-}
-
-var rgbPackFunctions = map[string]func(string) []byte{
 	"232.600": func(value string) []byte {
 		matches := regexpRgb.FindStringSubmatch(value)
 		if matches == nil {
@@ -393,9 +363,6 @@ var rgbPackFunctions = map[string]func(string) []byte{
 
 		return datapoint.Pack()
 	},
-}
-
-var colorXyyPackFunctions = map[string]func(string) []byte{
 	"242.600": func(value string) []byte {
 		matches := regexpXyy.FindStringSubmatch(value)
 		if matches == nil {
@@ -434,9 +401,6 @@ var colorXyyPackFunctions = map[string]func(string) []byte{
 
 		return datapoint.Pack()
 	},
-}
-
-var rgbwPackFunctions = map[string]func(string) []byte{
 	"251.600": func(value string) []byte {
 		matches := regexpRgbw.FindStringSubmatch(value)
 		if matches == nil {
