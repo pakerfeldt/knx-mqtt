@@ -8,10 +8,10 @@ Welcome to the KNX / MQTT Bridge! This versatile application, crafted in Go, fac
 * Flexible MQTT Topics: Publish KNX events to MQTT topics formatted as `knx/x/y/z`, where `x/y/z` represents the group address. You can also configure the `knx/` prefix and use names for group address sections.
 
 ## KNX XML Export
-For optimal performance, provide an ETS XML export of your group addresses and their datapoint types. This enables automatic conversion between raw types and ensures precise data handling. Without this export, you’ll be limited to handling raw bytes only.
+To get the most out of this application, provide an ETS XML export of your group addresses and their datapoint types. This enables automatic conversion between raw types and ensures precise data handling. Without this export, you’ll be limited to handling raw bytes only.
 
 ## Configuration
-The example configuration file is well-documented. Refer to this file for comprehensive setup instructions and customization options.
+The [example configuration](https://github.com/pakerfeldt/knx-mqtt/blob/main/config.example.yaml) file is well-documented. Refer to this file for comprehensive setup instructions and customization options.
 
 ## Usage
 You can build the application yourself, but using Docker is often more convenient. Here’s how you can get started with Docker:
@@ -28,8 +28,8 @@ services:
     image: pakerfeldt/knx-mqtt:latest
     restart: unless-stopped
     volumes:
-      - /srv/knx-mqtt/config.yaml:/app/config.yaml
-      - /srv/knx-mqtt/knx.xml:/app/knx.xml
+      - ./config.yaml:/app/config.yaml
+      - ./knx.xml:/app/knx.xml
 ```
 
 ## KNX to MQTT
@@ -41,8 +41,8 @@ The app supports several payload formats for MQTT messages:
 | -------- | ------- | ------- |
 | `value`  | String representation of the value (e.g., `24.52`) | Yes |
 | `value-with-unit` | String representation including the unit (e.g., `24.42 °C`) | Yes |
-| `bytes` | Raw bytes as specified by KNX | No |
 | `json` | JSON representation of the message | Yes |
+| `bytes` | Raw bytes as specified by KNX | No |
 
 When sending JSON messages, you can include the following fields:
 
@@ -55,7 +55,7 @@ When sending JSON messages, you can include the following fields:
 
 ## MQTT to KNX
 
-KNX group addresses can be referred to using either their group address knx/x/y/z/ or their full name, 
+KNX group addresses can be referred to using either their group address `knx/x/y/z/` or their full name, 
 where x and y are the names of the group ranges and z is the name of the actual group address.
 
 ### Sending read requests
