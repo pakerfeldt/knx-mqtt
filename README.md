@@ -11,7 +11,9 @@ Welcome to the KNX / MQTT Bridge! This versatile application, crafted in Go, fac
 To get the most out of this application, provide an ETS XML export of your group addresses and their datapoint types. This enables automatic conversion between raw types and ensures precise data handling. Without this export, you’ll be limited to handling raw bytes only.
 
 ## Configuration
-The [example configuration](https://github.com/pakerfeldt/knx-mqtt/blob/main/config.example.yaml) file is well-documented. Refer to this file for comprehensive setup instructions and customization options.
+For a detailed guide on setting up and customizing the KNX/MQTT bridge, refer to the [example configuration file](https://github.com/pakerfeldt/knx-mqtt/blob/main/config.example.yaml). This file is thoroughly documented and provides comprehensive instructions for tailoring the bridge to your specific needs.
+
+Please note that the default configuration logs at the info level, which does not include detailed logs of successfully read KNX messages. During the integration phase, you may want to adjust the log level to debug to see incoming messages and gain better visibility into the bridge's operations.
 
 ## Usage
 You can build the application yourself, but using Docker is often more convenient. Here’s how you can get started with Docker:
