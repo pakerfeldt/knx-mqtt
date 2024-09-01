@@ -1,6 +1,6 @@
 # KNX / MQTT bridge in Go
 
-Welcome to the KNX / MQTT Bridge! This versatile application, crafted in Go, facilitates seamless integration between your KNX installation and MQTT. Perfect for smart home enthusiasts and IoT integrators, this bridge offers customizable and efficient connectivity.
+This application, crafted in Go, facilitates seamless integration between your KNX installation and MQTT. Perfect for smart home enthusiasts and IoT integrators, this bridge offers customizable and efficient connectivity.
 
 ## Features
 * Customizable Integration: Connect your KNX system with MQTT effortlessly.
@@ -49,7 +49,7 @@ The app supports several payload formats for MQTT messages:
 | `json` | JSON representation of the message | Yes |
 | `bytes` | Raw bytes as specified by KNX | No |
 
-When sending JSON messages, you can include the following fields:
+When sending JSON messages, you can chose to include/exclude the following fields:
 
 | Field    | Description |
 | -------- | ------- |
