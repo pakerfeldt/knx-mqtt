@@ -19,9 +19,11 @@ Please note that the default configuration logs at the info level, which does no
 You can build the application yourself, but using Docker is often more convenient. Here’s how you can get started with Docker:
 
 ### Docker
+Note that binding to the host's network is only necessary if you connect to KNX over multicast, i.e. `tunnelMode: false`.
 ```
-docker run --rm -it -v $(pwd)/config.yaml:/app/config.yaml -v $(pwd)/knx.xml:/app/knx.xml pakerfeldt/knx-mqtt:latest
+docker run --rm -it --network host -v $(pwd)/config.yaml:/app/config.yaml -v $(pwd)/knx.xml:/app/knx.xml pakerfeldt/knx-mqtt:latest
 ```
+`--net=host` is only necessary if you communicate with KNX over multicast.
 
 ### Docker Compose
 ```
@@ -29,6 +31,7 @@ services:
   knx-mqtt:
     image: pakerfeldt/knx-mqtt:latest
     restart: unless-stopped
+    network_mode: "host"
     volumes:
       - ./config.yaml:/app/config.yaml
       - ./knx.xml:/app/knx.xml
