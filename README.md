@@ -37,7 +37,7 @@ services:
       - ./knx.xml:/app/knx.xml
 ```
 
-## KNX to MQTT
+## To MQTT
 
 ### MQTT message format
 The app supports several payload formats for MQTT messages:
@@ -49,7 +49,7 @@ The app supports several payload formats for MQTT messages:
 | `json` | JSON representation of the message | Yes |
 | `bytes` | Raw bytes as specified by KNX | No |
 
-When sending JSON messages, you can chose to include/exclude the following fields:
+When sending JSON messages, you can choose to include/exclude the following fields:
 
 | Field    | Description |
 | -------- | ------- |
@@ -58,7 +58,7 @@ When sending JSON messages, you can chose to include/exclude the following field
 | `value` | String representation of the value |
 | `unit` | Associated unit of the value |
 
-## MQTT to KNX
+## To KNX
 
 KNX group addresses can be referred to using either their group address `knx/x/y/z/` or their full name, 
 where x and y are the names of the group ranges and z is the name of the actual group address.
@@ -72,6 +72,9 @@ To write to a group address with its raw bytes, send a message to `knx/x/y/z/wri
 ### Writing value as a string to an address
 To write to a group address using a string representation, send a message to `knx/x/y/z/write` with the value as a string.
 E.g. `"25.35"`, `"true"`.
+
+## Supported KNX DPTs
+See [supported-dpts](https://github.com/pakerfeldt/knx-mqtt/blob/main/supported-dpts).
 
 ## Migrating from knx-mqtt-bridge
 If you’re transitioning from [knx-mqtt-bridge](https://github.com/pakerfeldt/knx-mqtt-bridge), the NodeJS version of this bridge, you’ll find the migration relatively straightforward. The configurations are similar enough to make the transition smooth.
