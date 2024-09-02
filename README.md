@@ -23,7 +23,6 @@ Note that binding to the host's network is only necessary if you connect to KNX 
 ```
 docker run --rm -it --network host -v $(pwd)/config.yaml:/app/config.yaml -v $(pwd)/knx.xml:/app/knx.xml pakerfeldt/knx-mqtt:latest
 ```
-`--net=host` is only necessary if you communicate with KNX over multicast.
 
 ### Docker Compose
 ```
