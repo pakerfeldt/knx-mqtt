@@ -31,11 +31,12 @@ type IncludedJsonFields struct {
 
 // KNXConfig represents the KNX configuration section.
 type KNXConfig struct {
-	ETSExport                   string `yaml:"etsExport"`
-	Endpoint                    string `yaml:"endpoint"`
-	TunnelMode                  bool   `yaml:"tunnelMode"`
-	IgnoreUnknownGroupAddresses bool   `yaml:"ignoreUnknownGroupAddresses"`
-	EnableLogs                  bool   `yaml:"enableLogs"`
+	ETSExport                   string                 `yaml:"etsExport"`
+	Endpoint                    string                 `yaml:"endpoint"`
+	TunnelMode                  bool                   `yaml:"tunnelMode"`
+	IgnoreUnknownGroupAddresses bool                   `yaml:"ignoreUnknownGroupAddresses"`
+	EnableLogs                  bool                   `yaml:"enableLogs"`
+	GaTranslation               FlatAddressTranslation `yaml:"translateFlatGroupAddresses"`
 }
 
 // MQTTConfig represents the MQTT configuration section.

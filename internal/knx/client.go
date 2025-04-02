@@ -58,7 +58,12 @@ func (c *KNXClient) connect() *error {
 
 func (c *KNXClient) newMessage(event knxgo.GroupEvent) *msg.KNXMessage {
 	destination := event.Destination.String()
-	index, exists := c.knxItems.GadToIndex[destination]
+	flatDestination, err := models.ParseGroupAddress(destination)
+	if err != nil {
+		log.Error().Err(err).Str("address", destination).Msg("Failed to parse KNX group address")
+		return msg.NewKNX(event, nil, nil)
+	}
+	index, exists := c.knxItems.GadToIndex[flatDestination]
 	if !exists {
 		return msg.NewKNX(event, nil, nil)
 	}

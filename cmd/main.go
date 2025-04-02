@@ -35,7 +35,7 @@ func main() {
 	utils.SetupLogging(cfg.LogLevel, cfg.KNX.EnableLogs)
 
 	if cfg.KNX.ETSExport != "" {
-		knxItems, err = parser.ParseGroupAddressExport(cfg.KNX.ETSExport)
+		knxItems, err = parser.ReadGroupsFromFile(cfg.KNX.ETSExport, cfg.KNX.GaTranslation)
 		if err != nil {
 			log.Fatal().Str("error", fmt.Sprintf("%+v", err)).Msg("Error parsing KNX XML")
 			os.Exit(1)

@@ -10,7 +10,9 @@ import (
 	"github.com/vapourismo/knx-go/knx/dpt"
 )
 
-var regexpGad = regexp.MustCompile(`\d+\/\d+\/\d+`)
+var regexpGad = regexp.MustCompile(`^\d+\/\d+\/\d+$`)
+var regexpGadOrFlat = regexp.MustCompile(`^\d+\/\d+\/\d+|\d+$`)
+var regexpFlatGad = regexp.MustCompile(`^\d+$`)
 
 var regexpTimeOfDay = regexp.MustCompile(`^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?\s*(\d{2}):(\d{2}):(\d{2})$`)
 var regexpDate = regexp.MustCompile(`^(\d{4})-(\d{2})-(\d{2})$`)
@@ -25,6 +27,14 @@ var weekdays = map[string]uint8{
 
 func IsRegularGroupAddress(address string) bool {
 	return regexpGad.MatchString(address)
+}
+
+func IsFlatGroupAddress(address string) bool {
+	return regexpFlatGad.MatchString(address)
+}
+
+func IsRegularOrFlatGroupAddress(address string) bool {
+	return regexpGadOrFlat.MatchString(address)
 }
 
 func PackString(datatype string, value string) ([]byte, error) {

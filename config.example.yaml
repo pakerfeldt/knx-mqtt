@@ -46,6 +46,17 @@ knx:
   # Enables logging from the KNX library
   enableLogs: false
 
+  # Translate flat group addresses to a specific format
+  # Can be specified as an integer:
+  #   0 = No translation (flat address)
+  #   1 = 2-part notation (main/sub)
+  #   2 = 3-part notation (main/middle/sub)
+  # Or as a string (case-insensitive):
+  #   "none" or "flat" = No translation (flat address)
+  #   "2-part" or "two-part" = 2-part notation (main/sub)
+  #   "3-part" or "three-part" = 3-part notation (main/middle/sub)
+  translateFlatGroupAddresses: "3-part"
+
 mqtt:
   # URL to MQTT broker
   #url: 'ssl://localhost:8883'
