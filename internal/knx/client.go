@@ -3,6 +3,7 @@ package knx
 import (
 	"context"
 	"fmt"
+	"net"
 	"strings"
 	"time"
 
@@ -22,6 +23,7 @@ type KNXClient struct {
 	knxItems *models.KNX
 	tunnel   *knxgo.GroupTunnel
 	router   *knxgo.GroupRouter
+	inbound  <-chan knxgo.GroupEvent
 }
 
 func NewClient(ctx context.Context, config models.Config, knxItems *models.KNX) *KNXClient {
@@ -46,12 +48,22 @@ func (c *KNXClient) connect() *error {
 			return &err
 		}
 		c.tunnel = &tunnel
+		c.inbound = c.tunnel.Inbound()
 	} else {
-		router, err := knxgo.NewGroupRouter(c.cfg.KNX.Endpoint, knxgo.DefaultRouterConfig)
+		routerConfig := knxgo.DefaultRouterConfig
+		if c.cfg.KNX.Interface != "" {
+			intf, err := net.InterfaceByName(c.cfg.KNX.Interface)
+			if err != nil {
+				return &err
+			}
+			routerConfig.Interface = intf
+		}
+		router, err := knxgo.NewGroupRouter(c.cfg.KNX.Endpoint, routerConfig)
 		if err != nil {
 			return &err
 		}
 		c.router = &router
+		c.inbound = c.router.Inbound()
 	}
 	return nil
 }
@@ -84,7 +96,7 @@ func (c *KNXClient) subscribe(callback func(*msg.KNXMessage)) {
 				case <-c.ctx.Done():
 					log.Info().Msg("Stopping KNX subscription...")
 					return
-				case event, ok := <-c.tunnel.Inbound():
+				case event, ok := <-c.inbound:
 					if !ok {
 						break ReadEvent
 					}

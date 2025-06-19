@@ -86,12 +86,18 @@ func (m KNXMessage) ToPayload(emitValueAsString bool, messageType string, jsonFi
 	var payload interface{}
 	if messageType == models.JsonType {
 		outgoingJson := models.OutgoingMqttJson{}
+		if jsonFields.IncludeAddress {
+			outgoingJson.Address = &m.resolvedDatapoint.groupAddress.Address
+		}
+		if jsonFields.IncludeName {
+			outgoingJson.Name = &m.resolvedDatapoint.groupAddress.Name
+		}
 		if jsonFields.IncludeBytes {
 			base64 := base64.StdEncoding.EncodeToString(m.resolvedDatapoint.datapoint.Pack())
 			outgoingJson.Bytes = &base64
 		}
-		if jsonFields.IncludeName {
-			outgoingJson.Name = &m.resolvedDatapoint.groupAddress.Name
+		if jsonFields.IncludeDpt {
+			outgoingJson.Dpt = m.Datapoint()
 		}
 		if jsonFields.IncludeValue {
 			if emitValueAsString {

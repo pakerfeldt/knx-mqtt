@@ -23,16 +23,19 @@ type OutgoingMqttMessage struct {
 }
 
 type IncludedJsonFields struct {
-	IncludeBytes bool `yaml:"bytes"`
-	IncludeName  bool `yaml:"name"`
-	IncludeValue bool `yaml:"value"`
-	IncludeUnit  bool `yaml:"unit"`
+	IncludeAddress bool `yaml:"address"`
+	IncludeName    bool `yaml:"name"`
+	IncludeBytes   bool `yaml:"bytes"`
+	IncludeDpt     bool `yaml:"dpt"`
+	IncludeValue   bool `yaml:"value"`
+	IncludeUnit    bool `yaml:"unit"`
 }
 
 // KNXConfig represents the KNX configuration section.
 type KNXConfig struct {
 	ETSExport                   string `yaml:"etsExport"`
 	Endpoint                    string `yaml:"endpoint"`
+	Interface                   string `yaml:"interface"`
 	TunnelMode                  bool   `yaml:"tunnelMode"`
 	IgnoreUnknownGroupAddresses bool   `yaml:"ignoreUnknownGroupAddresses"`
 	EnableLogs                  bool   `yaml:"enableLogs"`

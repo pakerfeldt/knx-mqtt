@@ -31,8 +31,6 @@ func NewClient(config models.Config) *MQTTClient {
 	}
 	if config.MQTT.ClientID != nil {
 		mqttOptions.SetClientID(*config.MQTT.ClientID)
-	} else {
-		mqttOptions.SetClientID("knx-mqtt")
 	}
 
 	if config.MQTT.TLSCA != nil && config.MQTT.TLSCert != nil && config.MQTT.TLSKey != nil {
