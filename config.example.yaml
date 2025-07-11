@@ -19,6 +19,9 @@ outgoingMqttMessage:
   # Emit the value payload as string, if false, the type will be preserved.
   emitValueAsString: false
 
+  # If true, do not pass on read commands from KNX to MQTT
+  ignoreReadCommands: false
+
   # When sending MQTT messages as JSON, these values determines what should be included.
   includedJsonFields:
     # Include the field `address`, with Group Address

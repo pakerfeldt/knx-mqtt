@@ -8,6 +8,7 @@ import (
 	"github.com/pakerfeldt/knx-mqtt/internal/models"
 	"github.com/pakerfeldt/knx-mqtt/internal/utils"
 	"github.com/rs/zerolog/log"
+	"github.com/vapourismo/knx-go/knx"
 	knxgo "github.com/vapourismo/knx-go/knx"
 	"github.com/vapourismo/knx-go/knx/dpt"
 )
@@ -42,6 +43,14 @@ func (m KNXMessage) IsResolved() bool {
 	return m.resolvedDatapoint != nil
 }
 
+func (m KNXMessage) IsReadRequest() bool {
+	return m.ge.Command == knx.GroupRead
+}
+
+func (m KNXMessage) Command() string {
+	return m.ge.Command.String()
+}
+
 func (m KNXMessage) Name() string {
 	if m.resolvedDatapoint == nil {
 		return "<unresolved>"
@@ -67,7 +76,9 @@ func (m KNXMessage) FullName() string {
 }
 
 func (m KNXMessage) String() string {
-	if m.resolvedDatapoint == nil {
+	if m.IsReadRequest() {
+		return ""
+	} else if m.resolvedDatapoint == nil {
 		return "<unresolved value>"
 	} else {
 		return m.resolvedDatapoint.datapoint.String()

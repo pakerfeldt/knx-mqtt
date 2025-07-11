@@ -11,6 +11,7 @@ import (
 	"github.com/pakerfeldt/knx-mqtt/internal/msg"
 	"github.com/pakerfeldt/knx-mqtt/internal/utils"
 	"github.com/rs/zerolog/log"
+	"github.com/vapourismo/knx-go/knx"
 	knxgo "github.com/vapourismo/knx-go/knx"
 	"github.com/vapourismo/knx-go/knx/cemi"
 	"github.com/vapourismo/knx-go/knx/dpt"
@@ -100,7 +101,9 @@ func (c *KNXClient) subscribe(callback func(*msg.KNXMessage)) {
 					if !ok {
 						break ReadEvent
 					}
-
+					if c.cfg.OutgoingMqttMessage.IgnoreReadCommands && event.Command == knx.GroupRead {
+						continue
+					}
 					message := c.newMessage(event)
 					callback(message)
 				}

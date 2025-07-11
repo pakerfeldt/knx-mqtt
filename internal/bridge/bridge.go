@@ -37,11 +37,14 @@ func (b *Bridge) Start() {
 }
 
 func (b *Bridge) handleKNXMessage(message *msg.KNXMessage) {
+	logMessage := log.Debug().Str("protocol", "knx").Str("address", message.Destination())
 	if message.IsResolved() {
-		log.Debug().Str("protocol", "knx").Str("address", message.Destination()).Str("name", message.Name()).Str("value", message.String()).Msg("Incoming")
-	} else {
-		log.Debug().Str("protocol", "knx").Str("address", message.Destination()).Msg("Incoming")
+		logMessage.Str("name", message.Name())
+		if message.String() != "" {
+			logMessage.Str("value", message.String())
+		}
 	}
+	logMessage.Msg("Incoming")
 	b.mqttClient.Send(*message)
 }
 
