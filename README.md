@@ -57,9 +57,16 @@ When sending JSON messages, you can choose to include/exclude the following fiel
 | `value` | Value with preserved type or as string representation if emitValueAsString is true |
 | `unit` | Associated unit of the value |
 
+### Read commands
+Read commands from KNX will be passed on to the address + `/read`, e.g. `knx/1/2/3/read`. If you subscribe 
+with wildcard, e.g.. `knx/1/2/#` you will get these `read` messages that you might want to discard. The
+fact that these `read` messages are preserved from KNX to MQTT allows for having an external response to a
+KNX initiated `read` request. With the config option `ignoreReadCommands: true` you can ignore any such
+message from KNX.
+
 ## To KNX
 
-KNX group addresses can be referred to using either their group address `knx/x/y/z/` or their full name, 
+KNX group addresses can be referred to using either their group address `knx/x/y/z` or their full name, 
 where x and y are the names of the group ranges and z is the name of the actual group address.
 
 ### Sending read requests
