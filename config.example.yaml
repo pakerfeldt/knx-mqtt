@@ -17,7 +17,10 @@ outgoingMqttMessage:
   # Emit values using human readable group address names
   emitUsingName: true
   # Emit the value payload as string, if false, the type will be preserved.
-  emitValueAsString: true
+  emitValueAsString: false
+
+  # If true, do not pass on read commands from KNX to MQTT
+  ignoreReadCommands: false
 
   # When sending MQTT messages as JSON, these values determines what should be included.
   includedJsonFields:
@@ -42,7 +45,8 @@ knx:
   endpoint: 224.0.23.12:3671
 
   # When using router/multicast, to avoid setsock error address not available, you can specify on which interface enable multicast
-  interface: en1
+  # Allows to specify which interface to use for multicast. Can be useful to overcome e.g. setsock error: address not available
+  # interface: en1
 
   # If true, connect over tunnel/unicast, if false use router/multicast.
   tunnelMode: false

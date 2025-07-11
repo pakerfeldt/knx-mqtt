@@ -19,6 +19,7 @@ type OutgoingMqttMessage struct {
 	EmitUsingAddress   bool               `yaml:"emitUsingAddress"`
 	EmitUsingName      bool               `yaml:"emitUsingName"`
 	EmitValueAsString  bool               `yaml:"emitValueAsString"`
+	IgnoreReadCommands bool               `yaml:"ignoreReadCommands"`
 	IncludedJsonFields IncludedJsonFields `yaml:"includedJsonFields"`
 }
 
