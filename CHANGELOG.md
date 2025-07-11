@@ -1,3 +1,7 @@
+# Version 1.5
+- Add option to include address and dpt in MQTT message
+- Allow for specifying which interface to use when using multicast 
+
 # Version 1.4
 - Support MQTT over TLS.
 
