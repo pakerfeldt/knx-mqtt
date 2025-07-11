@@ -37,7 +37,7 @@ func (b *Bridge) Start() {
 }
 
 func (b *Bridge) handleKNXMessage(message *msg.KNXMessage) {
-	logMessage := log.Debug().Str("protocol", "knx").Str("address", message.Destination())
+	logMessage := log.Debug().Str("protocol", "knx").Str("address", message.Destination()).Str("command", message.Command())
 	if message.IsResolved() {
 		logMessage.Str("name", message.Name())
 		if message.String() != "" {

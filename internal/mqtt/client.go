@@ -113,7 +113,6 @@ func (c *MQTTClient) Send(message msg.KNXMessage) {
 		topic = topic + "/read"
 		payload = ""
 	}
-	fmt.Printf("%v to %s\n", payload, topic)
 	if c.cfg.OutgoingMqttMessage.EmitUsingAddress {
 		c.client.Publish(c.cfg.MQTT.TopicPrefix+message.Address(), c.cfg.MQTT.Qos, c.cfg.MQTT.Retain, payload)
 	}
