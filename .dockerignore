@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts
+knx-mqtt
+*.img
+
+# Docs, examples, etc.
+README.md
+CHANGELOG.md
+LICENSE
+supported-dpts
+config.example.yaml
+knx.xml

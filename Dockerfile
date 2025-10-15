@@ -9,10 +9,24 @@ RUN go mod download
 COPY internal/ ./internal/
 COPY cmd/ ./cmd/
 
-# CGO_ENABLED=0 GOOS=linux GOARCH=amd64
-RUN go build -o /knx-mqtt ./cmd
+# Build the application with CGO disabled for a static binary suitable for a FROM scratch image
+# ldflags -s -w for an as small as possible binary
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /knx-mqtt ./cmd
 
-FROM alpine:latest
+# Build from scratch for added leanness and security
+FROM scratch AS knx-mqtt-minimal
+
+WORKDIR /app
+
+COPY --from=build /knx-mqtt .
+
+# Use non-root user for security
+USER 1337:1337
+
+CMD ["/app/knx-mqtt"]
+
+
+FROM alpine:latest AS knx-mqtt
 
 WORKDIR /app
 
