@@ -2,5 +2,3 @@ config.yaml
 knx.xml
 knx-mqtt
 main
-# Added by goreleaser init:
-dist/
