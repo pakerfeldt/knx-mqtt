@@ -44,7 +44,7 @@ func NewClient(config models.Config) *MQTTClient {
 	mqttOptions.AddBroker(config.MQTT.URL)
 
 	mqttOptions.OnConnectionLost = func(client mqttgo.Client, err error) {
-		log.Error().Str("error", fmt.Sprintf("%+v", err)).Msg("Connection to MQTT broker lost")
+		log.Fatal().Str("error", fmt.Sprintf("%+v", err)).Msg("Connection to MQTT broker lost")
 	}
 	mqttOptions.SetOnConnectHandler(c.onConnect)
 	c.client = mqttgo.NewClient(mqttOptions)
@@ -59,7 +59,7 @@ func (c *MQTTClient) onConnect(client mqttgo.Client) {
 	})
 	token.Wait()
 	if token.Error() != nil {
-		log.Warn().Msg("Failed to connect to MQTT broker")
+		log.Fatal().Msg("Failed to connect to MQTT broker")
 	} else {
 		log.Info().Msg("Subscribed to MQTT")
 	}
